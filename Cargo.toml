@@ -13,12 +13,12 @@ codegen-units = 1
 strip = true
 
 [dependencies]
-anyhow = "1.0.99"
-niri-ipc = "25.8.0"
-regex = "1.11.2"
-sap = "0.0.5"
-tracing = "0.1.41"
-tracing-subscriber = { version = "0.3.20", default-features = false, features = [
+anyhow = "1.0.100"
+niri-ipc = "25.11.0"
+regex = "1.12.2"
+sap = "0.0.7"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.22", default-features = false, features = [
     "ansi",
     "fmt",
     "std",

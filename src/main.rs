@@ -4,9 +4,8 @@ use anyhow::{Result, bail};
 use niri_ipc::socket::Socket;
 use niri_ipc::{Action, Event, Request, Response, Window, WorkspaceReferenceArg};
 use regex::Regex;
-use sap::ParsingError;
 use sap::{Argument, Parser};
-use tracing::info;
+use tracing::{debug, info};
 use tracing_subscriber::filter::LevelFilter;
 
 const TITLE_REGEX: LazyCell<Regex> =
@@ -84,7 +83,13 @@ fn main() -> Result<()> {
                 if window_matches(&window) {
                     info!("Found a matching window with id {}", window.id);
                     pip_window = Some(window.id);
+                    break;
                 }
+
+                debug!(
+                    "Ignoring window \"{}\"",
+                    window.title.unwrap_or(window.id.to_string())
+                )
             }
         }
 
@@ -106,7 +111,7 @@ fn main() -> Result<()> {
                             },
                         ))?;
                     } else {
-                        info!("Workspace {} focused but no window was detected", id);
+                        debug!("Workspace {} focused but no window was detected", id);
                     }
                 }
                 Event::WindowOpenedOrChanged { ref window } => {
